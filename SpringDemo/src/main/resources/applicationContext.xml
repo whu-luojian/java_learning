@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--在Spring中注册bean对象-->
+    <!--
+        id：创建对象的名称
+        class: 类的包路径
+        含义：Spring会实例化xxx.Student,实例化得到的对象名称叫myStudent
+    -->
+    <bean id="myStudent" class="com.luojian.base_bean.domain.Student" scope="singleton"></bean>
+
+    <!--利用setter方法实现数据注入-->
+    <!--
+        name: 属性名称
+        value: 简单属性值
+    -->
+    <!--注入bean-->
+    <!--
+        1. ref属性指定注入的bean名称
+        2. 通过autowire属性自动装配
+    -->
+    <bean id="myTeacher" class="com.luojian.base_ioc.Teacher" autowire="byType">
+        <property name="name" value="luojian"/>
+        <property name="address" value="wuhan"/>
+        <property name="phone" value="15827243066"/>
+        <property name="dog" ref="myDog"/>
+        <!--复杂属性数据注入-->
+        <property name="schools">
+            <list>
+                <value>小学</value>
+                <value>初中</value>
+                <value>高中</value>
+            </list>
+        </property>
+    </bean>
+
+    <!--利用构造器（有参构造函数）实现数据注入-->
+    <bean id="myDog" class="com.luojian.base_ioc.Dog">
+        <!--隐性赋值,看不见形参，通过索引index赋值-->
+        <!--<constructor-arg index="0" value="3"></constructor-arg>-->
+        <!--<constructor-arg index="1" value="yellow"></constructor-arg>-->
+        <!--显性赋值-->
+        <constructor-arg name="age" value="3"></constructor-arg>
+        <constructor-arg name="color" value="yellow"></constructor-arg>
+    </bean>
+</beans>
